@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aarush Shop</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="assets/logo.png" alt="Logo" id="logoImage">
+  </div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Products</a>
+    <a href="#" onclick="toggleCart()">Cart</a>
+    <a href="#" onclick="toggleAdmin()">Admin</a>
+  </nav>
+  <div class="burger" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
+  </div>
+  <div class="search-bar">
+    <input type="text" placeholder="Search products..." id="searchInput">
+    <button onclick="searchProducts()">Go</button>
+  </div>
+</header>
+
+<section class="products">
+  <h2>Featured Products</h2>
+  <div class="product-grid" id="productGrid"></div>
+</section>
+
+<!-- Cart Panel -->
+<div class="cart-panel" id="cartPanel">
+  <h3>Your Cart</h3>
+  <div id="cartItems"></div>
+  <strong>Total: ₹<span id="cartTotal">0</span></strong>
+  <button onclick="checkout()">Checkout</button>
+</div>
+
+<!-- Admin Panel -->
+<div id="adminPanel">
+  <h3>Admin Panel</h3>
+  <label>Logo Upload:</label>
+  <input type="file" accept="image/*" id="logoUpload">
+  <button onclick="uploadLogo()">Upload Logo</button>
+  <hr>
+  <h3>Add Product</h3>
+  <input type="text" id="prodTitle" placeholder="Title">
+  <input type="text" id="prodDesc" placeholder="Description">
+  <input type="number" id="prodPrice" placeholder="Price">
+  <input type="file" accept="image/*" id="prodImage">
+  <button onclick="saveProduct()">Add Product</button>
+</div>
+
+<footer>© 2025 Aarush Shop</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
