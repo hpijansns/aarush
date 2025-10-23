@@ -1,225 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aarush Admin Panel</title>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      background: #f5f5f5;
-    }
-
-    header {
-      background: #111;
-      color: #fff;
-      padding: 15px 20px;
-      text-align: center;
-      font-size: 22px;
-      font-weight: bold;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 20px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .form-section {
-      margin-bottom: 30px;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 15px;
-    }
-
-    button {
-      background: #111;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: #333;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      background: #111;
-      color: #fff;
-    }
-
-    td img {
-      width: 60px;
-      height: 60px;
-      border-radius: 5px;
-      object-fit: cover;
-    }
-
-    @media (max-width: 600px) {
-      table, thead, tbody, th, td, tr {
-        display: block;
-      }
-
-      td {
-        margin-bottom: 15px;
-      }
-
-      th {
-        display: none;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aarush Admin Panel</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>Aarush Admin Panel</header>
 
-  <div class="container">
-    <div class="form-section">
-      <h2>Add / Edit Product</h2>
-      <input type="text" id="productName" placeholder="Product Name" />
-      <textarea id="productDesc" placeholder="Product Description"></textarea>
-      <input type="number" id="productPrice" placeholder="Product Price" />
-      <input type="file" id="productImage" accept="image/*" />
-      <button onclick="addProduct()">Save Product</button>
-    </div>
+<header>
+  <h2 style="margin-left:20px;">Admin Panel</h2>
+  <a href="index.html" style="margin-right:20px;color:#111;font-weight:bold;">Back to Store</a>
+</header>
 
-    <h2>Product List</h2>
-    <table id="productTable">
-      <thead>
-        <tr>
-          <th>Image</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Description</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+<main style="padding:20px; max-width:1000px; margin:auto;">
 
-  <script>
-    let products = JSON.parse(localStorage.getItem("products")) || [];
-    let editIndex = -1;
+  <!-- Logo Upload -->
+  <section style="margin-bottom:30px;">
+    <h3>Logo Upload / Edit</h3>
+    <input type="file" id="logoUpload" accept="image/*">
+    <button onclick="uploadLogo()" style="margin-left:10px;padding:5px 15px;">Upload</button>
+  </section>
 
-    function renderTable() {
-      const tbody = document.querySelector("#productTable tbody");
-      tbody.innerHTML = "";
-      products.forEach((p, i) => {
-        tbody.innerHTML += `
-          <tr>
-            <td><img src="${p.image}" alt="product"></td>
-            <td>${p.name}</td>
-            <td>₹${p.price}</td>
-            <td>${p.desc}</td>
-            <td>
-              <button onclick="editProduct(${i})">Edit</button>
-              <button onclick="deleteProduct(${i})" style="background:red">Delete</button>
-            </td>
-          </tr>
-        `;
-      });
-    }
+  <!-- Add / Edit Product -->
+  <section style="margin-bottom:30px;">
+    <h3>Add / Edit Product</h3>
+    <input type="text" id="prodCategory" placeholder="Category (optional)" style="margin-bottom:5px;width:100%;padding:6px;">
+    <input type="text" id="prodTitle" placeholder="Product Title" style="margin-bottom:5px;width:100%;padding:6px;">
+    <textarea id="prodDesc" placeholder="Product Description" style="margin-bottom:5px;width:100%;padding:6px;"></textarea>
+    <input type="text" id="prodPrice" placeholder="Price" style="margin-bottom:5px;width:100%;padding:6px;">
+    <input type="file" id="prodImage" accept="image/*" style="margin-bottom:5px;">
+    <button onclick="saveProduct()" style="padding:6px 15px;">Add / Save Product</button>
+  </section>
 
-    function addProduct() {
-      const name = document.getElementById("productName").value.trim();
-      const desc = document.getElementById("productDesc").value.trim();
-      const price = document.getElementById("productPrice").value.trim();
-      const imageFile = document.getElementById("productImage").files[0];
+  <!-- Product List -->
+  <section>
+    <h3>All Products</h3>
+    <div id="adminProductGrid" style="display:flex;flex-direction:column;gap:15px;"></div>
+  </section>
 
-      if (!name || !desc || !price) {
-        alert("Please fill all fields!");
-        return;
-      }
+</main>
 
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const imageURL = e.target.result;
-
-        const newProduct = { name, desc, price, image: imageURL };
-
-        if (editIndex === -1) {
-          products.push(newProduct);
-        } else {
-          products[editIndex] = newProduct;
-          editIndex = -1;
-        }
-
-        localStorage.setItem("products", JSON.stringify(products));
-        renderTable();
-        clearForm();
-      };
-
-      if (imageFile) {
-        reader.readAsDataURL(imageFile);
-      } else {
-        const existingImage = editIndex !== -1 ? products[editIndex].image : '';
-        const newProduct = { name, desc, price, image: existingImage };
-        if (editIndex === -1) {
-          products.push(newProduct);
-        } else {
-          products[editIndex] = newProduct;
-          editIndex = -1;
-        }
-        localStorage.setItem("products", JSON.stringify(products));
-        renderTable();
-        clearForm();
-      }
-    }
-
-    function editProduct(index) {
-      const p = products[index];
-      document.getElementById("productName").value = p.name;
-      document.getElementById("productDesc").value = p.desc;
-      document.getElementById("productPrice").value = p.price;
-      editIndex = index;
-    }
-
-    function deleteProduct(index) {
-      if (confirm("Delete this product?")) {
-        products.splice(index, 1);
-        localStorage.setItem("products", JSON.stringify(products));
-        renderTable();
-      }
-    }
-
-    function clearForm() {
-      document.getElementById("productName").value = "";
-      document.getElementById("productDesc").value = "";
-      document.getElementById("productPrice").value = "";
-      document.getElementById("productImage").value = "";
-    }
-
-    renderTable();
-  </script>
+<script src="script.js"></script>
 </body>
 </html>
