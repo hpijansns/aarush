@@ -1,134 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aarush Store</title>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      background: #f8f8f8;
-    }
-
-    header {
-      background: #111;
-      color: #fff;
-      text-align: center;
-      padding: 15px;
-      font-size: 22px;
-      font-weight: bold;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .product-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 20px;
-      padding: 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .product {
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-      text-align: center;
-      transition: transform 0.3s;
-    }
-
-    .product:hover {
-      transform: scale(1.03);
-    }
-
-    .product img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .product h3 {
-      margin: 10px 0;
-      font-size: 18px;
-    }
-
-    .product p {
-      color: #555;
-      font-size: 14px;
-      padding: 0 10px;
-    }
-
-    .product .price {
-      font-weight: bold;
-      margin: 10px 0;
-      color: #222;
-    }
-
-    .product button {
-      margin: 8px;
-      padding: 8px 15px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      color: #fff;
-      background: #111;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .product button:hover {
-      background: #333;
-    }
-
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #111;
-      color: white;
-      margin-top: 30px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aarush Store</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <header>
-    Aarush Store
-  </header>
+<!-- Header -->
+<header>
+  <img src="https://via.placeholder.com/100x50?text=Logo" alt="Logo" id="logoImage">
+  <nav id="navMenu">
+    <a href="#">Home</a>
+    <a href="#">Products</a>
+    <a href="#" onclick="toggleCart()">Cart</a>
+    <a href="admin.html">Admin</a>
+  </nav>
+  <div class="burger" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
+  </div>
+</header>
 
-  <div class="product-container" id="productList"></div>
+<!-- Products Section -->
+<section class="product-container" id="productGrid"></section>
 
-  <footer>© 2025 Aarush Store. All Rights Reserved.</footer>
+<!-- Cart Panel -->
+<div class="cart-panel" id="cartPanel">
+  <h3 style="text-align:center;margin-bottom:20px;">Your Cart</h3>
+  <div id="cartItems" style="display:flex;flex-direction:column;gap:15px;"></div>
+  <div style="text-align:center;margin-top:20px;">
+    <strong>Total: ₹<span id="cartTotal">0</span></strong>
+  </div>
+  <div style="text-align:center;margin-top:10px;">
+    <button onclick="checkout()" style="padding:10px 20px;background:gold;color:#111;border:none;border-radius:25px;font-weight:bold;cursor:pointer;transition:0.3s;">Checkout</button>
+  </div>
+</div>
 
-  <script>
-    function loadProducts() {
-      const productList = document.getElementById("productList");
-      const products = JSON.parse(localStorage.getItem("products")) || [];
-      productList.innerHTML = "";
+<!-- Footer -->
+<footer>© 2025 Aarush Store. All Rights Reserved.</footer>
 
-      if (products.length === 0) {
-        productList.innerHTML = "<p style='text-align:center;grid-column:1/-1;'>No products available yet!</p>";
-        return;
-      }
-
-      products.forEach((p) => {
-        productList.innerHTML += `
-          <div class="product">
-            <img src="${p.image}" alt="${p.name}">
-            <h3>${p.name}</h3>
-            <p>${p.desc}</p>
-            <div class="price">₹${p.price}</div>
-            <button>Add to Cart</button>
-            <button style="background:gold;color:#111;">Buy Now</button>
-          </div>
-        `;
-      });
-    }
-
-    loadProducts();
-  </script>
+<script src="script.js"></script>
 </body>
 </html>
