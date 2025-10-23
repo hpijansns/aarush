@@ -1,13 +1,217 @@
-/* ---------- ADMIN PANEL STYLES ---------- */
-.admin-body{background:#f3f3f3;color:#111;font-family:sans-serif;}
-.admin-header{background:#111;color:#fff;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;}
-.back-btn{text-decoration:none;color:#fff;background:gold;padding:5px 10px;border-radius:5px;}
-.admin-container{padding:20px;}
-.admin-section{background:white;padding:15px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 5px rgba(0,0,0,0.1);}
-.admin-section h3{margin-bottom:10px;}
-.admin-section input{width:100%;margin:5px 0;padding:8px;border:1px solid #ccc;border-radius:5px;}
-.admin-section button{background:#111;color:#fff;border:none;padding:10px 15px;border-radius:5px;cursor:pointer;}
-.admin-section button:hover{background:gold;color:#111;}
-#adminProductList{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;}
-#adminProductList div{background:#fafafa;border:1px solid #ddd;padding:10px;border-radius:10px;text-align:center;}
-#adminProductList img{width:100%;height:100px;object-fit:cover;border-radius:5px;}
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: #f8f8f8;
+}
+
+/* Header */
+header {
+  background: white;
+  color: #111;
+  padding: 15px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+header img#logoImage {
+  max-height: 50px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #111;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: gold;
+}
+
+/* Hamburger Menu */
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.burger div {
+  width: 25px;
+  height: 3px;
+  background: #111;
+}
+
+/* Products Grid */
+.product-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.product {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s;
+  overflow: hidden;
+}
+
+.product:hover {
+  transform: scale(1.03);
+}
+
+.product img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.product h3 {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+.product p {
+  color: #555;
+  font-size: 14px;
+  padding: 0 10px;
+}
+
+.product .price {
+  font-weight: bold;
+  margin: 10px 0;
+  color: #222;
+}
+
+.product button {
+  margin: 8px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #fff;
+  background: #111;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.product button:hover {
+  background: #333;
+}
+
+/* Cart Panel */
+.cart-panel {
+  position: fixed;
+  left: -320px;
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background: #222;
+  color: white;
+  padding: 20px;
+  overflow-y: auto;
+  transition: 0.3s;
+  z-index: 200;
+}
+
+.cart-panel.show {
+  left: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+  background: #111;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.cart-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cart-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cart-item-info h4 {
+  margin: 0;
+  color: gold;
+}
+
+.cart-item-info p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #ccc;
+}
+
+.cart-item button {
+  padding: 5px 10px;
+  border: none;
+  background: red;
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cart-item button:hover {
+  opacity: 0.8;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 15px;
+  background: #111;
+  color: white;
+  margin-top: 30px;
+}
+
+/* Media Queries */
+@media(max-width:768px){
+  nav {
+    position: fixed;
+    top: 60px;
+    right: -220px;
+    width: 200px;
+    height: 100%;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background: white;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+    transition: 0.3s;
+    z-index: 150;
+  }
+  nav.active { right: 0; }
+  .burger { display: flex; }
+}
