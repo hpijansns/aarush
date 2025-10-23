@@ -3,57 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aarush Store</title>
+  <title>Admin Panel - Aarush Store</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header>
-    <div class="logo">
-      <img id="logoImage" src="assets/logo.png" alt="Logo">
-    </div>
-    <nav id="navMenu">
-      <a href="#">Home</a>
-      <a href="#">Shop</a>
-      <a href="#">Contact</a>
-    </nav>
-    <div class="burger" onclick="toggleMenu()">
-      <div></div><div></div><div></div>
-    </div>
-    <div class="icons">
-      <button onclick="toggleCart()">🛒</button>
-      <button onclick="toggleAdmin()">⚙️</button>
-    </div>
+<body class="admin-body">
+
+  <header class="admin-header">
+    <h2>🧑‍💼 Admin Panel</h2>
+    <a href="index.html" class="back-btn">← Back to Website</a>
   </header>
 
-  <section class="products" id="productGrid">
-    <!-- Products dynamically load होंगे -->
-  </section>
+  <main class="admin-container">
+    <section class="admin-section">
+      <h3>Upload Website Logo</h3>
+      <input type="file" id="logoUpload" accept="image/*" onchange="uploadLogo(event)">
+    </section>
 
-  <!-- Cart Panel -->
-  <div class="cart-panel" id="cartPanel">
-    <h2>Your Cart</h2>
-    <div id="cartItems"></div>
-    <button onclick="toggleCart()">Close</button>
-  </div>
+    <section class="admin-section">
+      <h3>Add New Product</h3>
+      <input type="text" id="prodTitle" placeholder="Product Title">
+      <input type="text" id="prodDesc" placeholder="Description">
+      <input type="number" id="prodPrice" placeholder="Price">
+      <input type="file" id="prodImage" accept="image/*">
+      <button onclick="addProduct()">Add Product</button>
+    </section>
 
-  <!-- Admin Panel -->
-  <div class="admin-panel" id="adminPanel">
-    <h2>Admin Panel</h2>
-    <label>Logo Upload:</label>
-    <input type="file" id="logoUpload" accept="image/*" onchange="uploadLogo(event)">
-    <hr>
-    <h3>Add Product</h3>
-    <input type="text" id="prodTitle" placeholder="Product Title">
-    <input type="text" id="prodDesc" placeholder="Description">
-    <input type="number" id="prodPrice" placeholder="Price">
-    <input type="file" id="prodImage" accept="image/*">
-    <button onclick="addProduct()">Add Product</button>
-    <button onclick="toggleAdmin()">Close</button>
-  </div>
-
-  <footer>
-    <p>© 2025 Aarush Store. All Rights Reserved.</p>
-  </footer>
+    <section class="admin-section">
+      <h3>Current Products</h3>
+      <div id="adminProductList"></div>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>
